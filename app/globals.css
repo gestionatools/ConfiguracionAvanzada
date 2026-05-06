@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth accordion animation using CSS grid */
+.accordion-grid {
+  display: grid;
+  transition: grid-template-rows 0.3s ease;
+}
+.accordion-grid.closed {
+  grid-template-rows: 0fr;
+}
+.accordion-grid.open {
+  grid-template-rows: 1fr;
+}
+.accordion-grid > div {
+  overflow: hidden;
+}
