@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { COLUMN_LABELS, FIELD_GROUPS } from '../../lib/columnLabels'
+import ActuacionesModal from './ActuacionesModal'
 
 const GROUP_STYLES = {
   nucleo:  { header: 'bg-nucleo-50  border-nucleo-200  text-nucleo-700',  dot: 'bg-nucleo-500' },
@@ -59,6 +60,7 @@ function formatValue(field, value) {
 
 export default function AccordionItem({ row }) {
   const [open, setOpen] = useState(false)
+  const [showActuaciones, setShowActuaciones] = useState(false)
 
   const municipio = row.municipio ?? '—'
   const ref = row.referencia_catastral ?? `Expediente #${row.ID}`
@@ -145,13 +147,31 @@ export default function AccordionItem({ row }) {
               )
             })}
 
-            {/* ID footer */}
-            <p className="text-right text-xs text-nucleo-100 pt-2 border-t border-nucleo-50">
-              ID interno: {row.ID}
-            </p>
+            {/* Actions footer */}
+            <div className="flex items-center justify-between pt-2 border-t border-nucleo-50">
+              {row.referencia_catastral && (
+                <button
+                  onClick={() => setShowActuaciones(true)}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-50 text-teal-700 text-xs font-semibold border border-teal-200 hover:bg-teal-100 transition"
+                >
+                  <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Actuaciones
+                </button>
+              )}
+              <p className="text-xs text-nucleo-100 ml-auto">ID interno: {row.ID}</p>
+            </div>
           </div>
         </div>
       </div>
+
+      {showActuaciones && row.referencia_catastral && (
+        <ActuacionesModal
+          referenciaCatastral={row.referencia_catastral}
+          onClose={() => setShowActuaciones(false)}
+        />
+      )}
     </div>
   )
 }
