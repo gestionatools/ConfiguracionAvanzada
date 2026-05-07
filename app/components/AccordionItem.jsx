@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { COLUMN_LABELS, FIELD_GROUPS } from '../../lib/columnLabels'
+import ActuacionesModal from './ActuacionesModal'
 
 const GROUP_STYLES = {
   nucleo:  { header: 'bg-nucleo-50  border-nucleo-200  text-nucleo-700',  dot: 'bg-nucleo-500' },
@@ -59,12 +60,14 @@ function formatValue(field, value) {
 
 export default function AccordionItem({ row }) {
   const [open, setOpen] = useState(false)
+  const [showActuaciones, setShowActuaciones] = useState(false)
 
   const municipio = row.municipio ?? '—'
   const ref = row.referencia_catastral ?? `Expediente #${row.ID}`
   const hasLicencia = row.licencia_urbanistica !== null && row.licencia_urbanistica !== undefined
 
   return (
+    <>
     <div className="bg-white rounded-xl border border-nucleo-100 shadow-sm overflow-hidden transition hover:shadow-md">
       {/* Accordion header */}
       <button
@@ -99,6 +102,19 @@ export default function AccordionItem({ row }) {
             </span>
           )}
         </div>
+
+        {/* Actuaciones button */}
+        {row.referencia_catastral && (
+          <button
+            onClick={(e) => { e.stopPropagation(); setShowActuaciones(true) }}
+            title="Ver actuaciones"
+            className="flex-shrink-0 flex items-center justify-center w-7 h-7 rounded-lg text-slate-300 hover:text-teal-600 hover:bg-teal-50 transition"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+            </svg>
+          </button>
+        )}
 
         {/* Chevron */}
         <svg
@@ -153,5 +169,13 @@ export default function AccordionItem({ row }) {
         </div>
       </div>
     </div>
+
+    {showActuaciones && (
+      <ActuacionesModal
+        referencia={row.referencia_catastral}
+        onClose={() => setShowActuaciones(false)}
+      />
+    )}
+    </>
   )
 }
