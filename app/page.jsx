@@ -19,8 +19,32 @@ async function getUrbanismoData() {
   }
 }
 
+async function getActuacionesMap() {
+  try {
+    const supabase = createSupabaseClient()
+    const { data, error } = await supabase
+      .from('Urbanismo_Reglada_Actuaciones')
+      .select('*')
+
+    if (error) throw error
+    const map = {}
+    for (const act of (data ?? [])) {
+      const key = act.ReferenciaCatastal ?? ''
+      if (!map[key]) map[key] = []
+      map[key].push(act)
+    }
+    return map
+  } catch (err) {
+    console.error('Supabase actuaciones error:', err)
+    return {}
+  }
+}
+
 export default async function Home() {
-  const { data, error } = await getUrbanismoData()
+  const [{ data, error }, actuacionesMap] = await Promise.all([
+    getUrbanismoData(),
+    getActuacionesMap(),
+  ])
 
   return (
     <div className="min-h-screen bg-nucleo-50">
@@ -51,7 +75,7 @@ export default async function Home() {
             <p className="text-red-500 text-sm mt-1">{error}</p>
           </div>
         ) : (
-          <AccordionList data={data} />
+          <AccordionList data={data} actuacionesMap={actuacionesMap} />
         )}
       </main>
 
