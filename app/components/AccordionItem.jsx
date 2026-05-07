@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { COLUMN_LABELS, FIELD_GROUPS } from '../../lib/columnLabels'
+import ActuacionesModal from './ActuacionesModal'
 
 const GROUP_STYLES = {
   nucleo:  { header: 'bg-nucleo-50  border-nucleo-200  text-nucleo-700',  dot: 'bg-nucleo-500' },
@@ -57,12 +58,14 @@ function formatValue(field, value) {
   return <span>{String(value)}</span>
 }
 
-export default function AccordionItem({ row }) {
+export default function AccordionItem({ row, actuaciones = [] }) {
   const [open, setOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
 
   const municipio = row.municipio ?? '—'
   const ref = row.referencia_catastral ?? `Expediente #${row.ID}`
   const hasLicencia = row.licencia_urbanistica !== null && row.licencia_urbanistica !== undefined
+  const hasActuaciones = actuaciones.length > 0
 
   return (
     <div className="bg-white rounded-xl border border-nucleo-100 shadow-sm overflow-hidden transition hover:shadow-md">
@@ -98,6 +101,20 @@ export default function AccordionItem({ row }) {
               {row.licencia_urbanistica ? 'Licencia ✓' : 'Sin licencia'}
             </span>
           )}
+          {/* Actuaciones button */}
+          <button
+            onClick={(e) => { e.stopPropagation(); setModalOpen(true) }}
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition ${
+              hasActuaciones
+                ? 'bg-teal-500 text-white hover:bg-teal-600'
+                : 'bg-slate-100 text-slate-400 hover:bg-slate-200'
+            }`}
+          >
+            <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+              hasActuaciones ? 'bg-white/70' : 'bg-slate-300'
+            }`} />
+            Actuaciones
+          </button>
         </div>
 
         {/* Chevron */}
@@ -108,6 +125,15 @@ export default function AccordionItem({ row }) {
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
+
+      {/* Actuaciones modal */}
+      {modalOpen && (
+        <ActuacionesModal
+          actuaciones={actuaciones}
+          referencia={ref}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
 
       {/* Accordion body (CSS grid animation) */}
       <div className={`accordion-grid ${open ? 'open' : 'closed'}`}>

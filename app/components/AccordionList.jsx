@@ -15,7 +15,7 @@ const SEARCH_FIELDS = [
   'ordenanza',
 ]
 
-export default function AccordionList({ data }) {
+export default function AccordionList({ data, actuacionesMap = {} }) {
   const [query, setQuery] = useState('')
 
   const filtered = useMemo(() => {
@@ -81,7 +81,11 @@ export default function AccordionList({ data }) {
       ) : (
         <div className="flex flex-col gap-2">
           {filtered.map((row) => (
-            <AccordionItem key={row.ID} row={row} />
+            <AccordionItem
+              key={row.ID}
+              row={row}
+              actuaciones={actuacionesMap[row.referencia_catastral] ?? []}
+            />
           ))}
         </div>
       )}
