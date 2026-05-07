@@ -6,9 +6,9 @@ import { COLUMN_LABELS, FIELD_GROUPS } from '../../lib/columnLabels'
 const GROUP_STYLES = {
   nucleo:  { header: 'bg-nucleo-50  border-nucleo-200  text-nucleo-700',  dot: 'bg-nucleo-500' },
   teal:    { header: 'bg-teal-50    border-teal-200    text-teal-700',    dot: 'bg-teal-500'   },
-  amber:   { header: 'bg-amber-50   border-amber-200   text-amber-700',   dot: 'bg-amber-500'  },
-  violet:  { header: 'bg-violet-50  border-violet-200  text-violet-700',  dot: 'bg-violet-500' },
-  rose:    { header: 'bg-rose-50    border-rose-200    text-rose-700',    dot: 'bg-rose-500'   },
+  sky:     { header: 'bg-sky-50     border-sky-200     text-sky-700',     dot: 'bg-sky-400'    },
+  blue:    { header: 'bg-blue-50    border-blue-200    text-blue-700',    dot: 'bg-blue-400'   },
+  cyan:    { header: 'bg-cyan-50    border-cyan-200    text-cyan-700',    dot: 'bg-cyan-500'   },
   slate:   { header: 'bg-slate-50   border-slate-200   text-slate-700',   dot: 'bg-slate-400'  },
 }
 
@@ -18,7 +18,7 @@ function formatValue(field, value) {
   if (field === 'licencia_urbanistica') {
     return (
       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-        value ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+        value ? 'bg-teal-100 text-teal-700' : 'bg-slate-100 text-slate-500'
       }`}>
         {value ? 'Sí' : 'No'}
       </span>
@@ -92,8 +92,8 @@ export default function AccordionItem({ row }) {
           {hasLicencia && (
             <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-semibold ${
               row.licencia_urbanistica
-                ? 'bg-green-100 text-green-700'
-                : 'bg-red-100 text-red-700'
+                ? 'bg-teal-100 text-teal-700'
+                : 'bg-slate-100 text-slate-500'
             }`}>
               {row.licencia_urbanistica ? 'Licencia ✓' : 'Sin licencia'}
             </span>
