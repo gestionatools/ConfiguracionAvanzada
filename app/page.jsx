@@ -60,7 +60,7 @@ export default async function Home() {
           </div>
           <div>
             <h1 className="text-xl font-bold tracking-widest text-nucleo-800 leading-none">
-              NÚCLEO
+              SGUSB
             </h1>
             <p className="text-xs font-medium tracking-wider text-teal-500 uppercase mt-0.5">
               Sistema de Gestión Urbanística
