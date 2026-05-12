@@ -1,10 +1,13 @@
+import { unstable_noStore as noStore } from 'next/cache'
 import { createSupabaseClient } from '../lib/supabase'
 import AccordionList from './components/AccordionList'
 import RefreshButton from './components/RefreshButton'
 
 export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 async function getUrbanismoData() {
+  noStore()
   try {
     const supabase = createSupabaseClient()
     const { data, error } = await supabase
@@ -21,6 +24,7 @@ async function getUrbanismoData() {
 }
 
 async function getActuacionesMap() {
+  noStore()
   try {
     const supabase = createSupabaseClient()
     const { data, error } = await supabase
