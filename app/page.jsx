@@ -1,5 +1,6 @@
 import { createSupabaseClient } from '../lib/supabase'
 import AccordionList from './components/AccordionList'
+import RefreshButton from './components/RefreshButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -65,6 +66,7 @@ export default async function Home() {
               Sistema de Gestión Urbanística
             </p>
           </div>
+          <RefreshButton />
         </div>
       </header>
 
