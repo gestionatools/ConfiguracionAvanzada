@@ -83,7 +83,7 @@ export default function AccordionList({ data, actuacionesMap = {} }) {
             <AccordionItem
               key={row.ID}
               row={row}
-              actuaciones={actuacionesMap[row.referencia_catastral] ?? []}
+              actuaciones={actuacionesMap[(row.referencia_catastral ?? '').toLowerCase()] ?? []}
             />
           ))}
         </div>
