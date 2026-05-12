@@ -1,19 +1,21 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { revalidateHome } from '../actions'
 
 export default function RefreshButton() {
   const router = useRouter()
-  const [isPending, startTransition] = useTransition()
-  const [spin, setSpin] = useState(false)
+  const [isPending, setIsPending] = useState(false)
 
-  function handleRefresh() {
-    setSpin(true)
-    startTransition(() => {
+  async function handleRefresh() {
+    setIsPending(true)
+    try {
+      await revalidateHome()
       router.refresh()
-    })
-    setTimeout(() => setSpin(false), 600)
+    } finally {
+      setIsPending(false)
+    }
   }
 
   return (
@@ -25,7 +27,7 @@ export default function RefreshButton() {
                  hover:bg-nucleo-50 hover:border-nucleo-300 transition disabled:opacity-60"
     >
       <svg
-        className={`w-4 h-4 transition-transform ${spin ? 'animate-spin' : ''}`}
+        className={`w-4 h-4 transition-transform ${isPending ? 'animate-spin' : ''}`}
         fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
       >
         <path strokeLinecap="round" strokeLinejoin="round"

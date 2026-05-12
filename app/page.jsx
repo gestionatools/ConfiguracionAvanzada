@@ -34,7 +34,7 @@ async function getActuacionesMap() {
     if (error) throw error
     const map = {}
     for (const act of (data ?? [])) {
-      const key = act.ReferenciaCatastal ?? ''
+      const key = (act.ReferenciaCatastal ?? act.referencia_catastral ?? '').toLowerCase()
       if (!map[key]) map[key] = []
       map[key].push(act)
     }
