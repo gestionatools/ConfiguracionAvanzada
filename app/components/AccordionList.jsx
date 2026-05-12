@@ -5,7 +5,6 @@ import AccordionItem from './AccordionItem'
 
 const SEARCH_FIELDS = [
   'referencia_catastral',
-  'municipio',
   'clase_suelo',
   'categoria_suelo',
   'zonificacion',
@@ -41,7 +40,7 @@ export default function AccordionList({ data, actuacionesMap = {} }) {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Buscar por referencia catastral, municipio, zonificación…"
+          placeholder="Buscar por referencia catastral, zonificación…"
           className="w-full pl-12 pr-4 py-3.5 bg-white rounded-xl border border-nucleo-200
                      text-nucleo-800 placeholder-nucleo-200 shadow-sm
                      focus:outline-none focus:ring-2 focus:ring-teal-400 focus:border-transparent

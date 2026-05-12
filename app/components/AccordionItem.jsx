@@ -62,7 +62,6 @@ export default function AccordionItem({ row, actuaciones = [] }) {
   const [open, setOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
 
-  const municipio = row.municipio ?? '—'
   const ref = row.referencia_catastral ?? `Expediente #${row.ID}`
   const hasLicencia = row.licencia_urbanistica !== null && row.licencia_urbanistica !== undefined
   const hasActuaciones = actuaciones.length > 0
@@ -82,7 +81,6 @@ export default function AccordionItem({ row, actuaciones = [] }) {
         {/* Main info */}
         <div className="flex-1 min-w-0">
           <p className="font-semibold text-nucleo-800 text-sm truncate">{ref}</p>
-          <p className="text-xs text-nucleo-500 mt-0.5 truncate">{municipio}</p>
         </div>
 
         {/* Badges */}
